@@ -41,7 +41,7 @@ Namn VARCHAR(60) not null ,
 Pris INT(255) not null DEFAULT 0,
 Antal INT(255) DEFAULT 0,
 ResourceURL TEXT,
-Rating DECIMAL(2,1) not null DEFAULT 0,
+Betyg DECIMAL(2,1) not null DEFAULT 0,
 PRIMARY KEY(VaruID)
 )";
 
