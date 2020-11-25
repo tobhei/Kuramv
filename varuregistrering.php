@@ -31,6 +31,9 @@
 	$errorBild = "";
 	
 	if (isset($_POST["Varunamn"])) {
+		$varuID = md5($_POST["Varunamn"]);
+		$varuID = substr($varuID, 0, 8);
+		
 		if (empty($_POST["Varunamn"])) {
 			$errorNamn = "Varan behöver ett namn.";
 		}
@@ -56,7 +59,8 @@
 		}
 		
 		else {
-			$target_dir = "resource/";
+			$target_dir = "resource/{$varuID}/";
+			if(!file_exists($target_dir)) mkdir("resource/{$varuID}/");
 			$target_file = $target_dir . basename($_FILES["Varubild"]['name']);
 			$uploadOk = 1;
 			$imageFileType = strtolower(pathinfo($target_file,PATHINFO_EXTENSION));
@@ -123,9 +127,6 @@
 	if (strlen($registrerat) > 0) {
 		
 		$conn = include 'setup.php';
-		
-		$varuID = md5($_POST["Varunamn"]);
-		$varuID = substr($varuID, 0, 8);
 		
 		$sql = "INSERT INTO " .$dbname .".Varor (VaruID, Namn, Pris, ResourceURL)
 				VALUES ('{$varuID}', '{$_POST["Varunamn"]}', {$_POST["Pris"]}, '{$target_file}');"; 
