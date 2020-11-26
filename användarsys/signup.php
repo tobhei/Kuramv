@@ -1,16 +1,34 @@
 <?php
     include_once 'header.php';  
 ?>
+<!DOCTYPE html>
     <section>
-        <h2>Skapa konto</h2>
+    <link rel="stylesheet" href="style.css">
+    <body>
+    <div class="navbar">
+    <a href="index.php">Home</a>
+    <?php
+    if (isset($_SESSION["useruid"])) {
+    echo "<a href='profilsida.php'> Profil sida </a> ";
+    echo "<a href='inkludering/logout.ink.php'> logga ut </a> ";
+    } else {
+    echo "<a href='login.php'> Logga in</a> ";
+    }
+    ?>
+    </div>
+    </body>
+        <div class="signupform">
+        <h1>Skapa konto</h1>
         <form action="inkludering/signup.ink.php" method="post">
-            <input type="text" name="fnamn" placeholder="Förnamn">
-            <input type="text" name="enamn" placeholder="Efternamn">
-            <input type="email" name="email" placeholder="E-mailadress">
-            <input type="text" name="uid" placeholder="Användarnamn">
-            <input type="password" name="pwd" placeholder="Lösenord">
-            <input type="password" name="pwdrepeat" placeholder="upprepa lösenord">
-            <button type="submit" name="submit">Skapa konto</button>
+            <input class="inputbox" type="text" name="fnamn" placeholder="Förnamn">
+            <input class="inputbox" type="text" name="enamn" placeholder="Efternamn">
+            <input class="inputbox" type="email" name="email" placeholder="E-mailadress">
+            <input class="inputbox" type="text" name="uid" placeholder="Användarnamn">
+            <input class="inputbox" type="password" name="pwd" placeholder="Lösenord">
+            <input class="inputbox" type="password" name="pwdrepeat" placeholder="upprepa lösenord">
+            <button class="signupknapp" type="submit" name="submit">Skapa konto</button>
+            <p class="eller">ELLER</p>
+            <p>Har du redan ett <a href="inkludering/login.ink.php">konto?</a></p>
         </form>
         <?php
         if (isset($_GET["error"])) {
@@ -32,6 +50,6 @@
                 echo "<p>Du har skapat ett konto</p>";
             }
         }
-    ?>
+        ?>
     </section>
 
