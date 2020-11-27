@@ -1,9 +1,14 @@
 <?php
-        $dbname = "D0018ELABB";
+      //  $dbname = "D0018ELABB";
 
         $servername = "dbserver";
         $username = "root";
         $password = "admin";
+        $dbname = "D0018ELABB";
+
+       // $servername = "localhost";
+      //  $username = "990907";
+        //$password = "990907";
 
 // Create connection
         $conn = new mysqli($servername, $username, $password);

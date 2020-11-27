@@ -12,12 +12,13 @@
             text-align: center;
         }
         div.grid-item{
-            padding: 20px;
+            padding: 0px;
             font-size: 20px;
             text-align: center;
             border: 1px solid rgba(0, 0, 0, 0.8);
             display: grid;
             grid-template-columns: auto auto;
+            width: min-content;
         }
 
         div.scrollmenu {
@@ -43,6 +44,28 @@
             display: grid;
             text-align: right;
         }
+
+
+        .grid-con{
+            display: grid;
+            grid-template-columns: auto auto auto auto;
+            grid-gap: 10px;
+            background-color: #ffffff;
+            padding: 10px;
+            width: min-content;
+            height: min-content;
+        }
+
+        .grid-i {
+            display: grid;
+            padding: 20px;
+            font-size: 12px;
+            text-align: center;
+
+        }
+
+
+
     </style>
 </head>
 <body>
@@ -51,7 +74,7 @@
    <!-- <a href="#home">Home</a>-->
 
     <?php
-    $kundnummer = "2";
+    $kundnummer = "1";
     $totpris = 0;
     $totsaker = 0;
     $conn = include 'setup.php';
@@ -82,9 +105,50 @@
                     </div>
                     <div class='right-alligned'>
                         <a href=vara/{$row['VaruID']}>".$row['Namn'] . "</a><a>
-                        ". $row['Antal'] ."<br>
+                         <div class='grid-con'>
+                        <div class='grid-i'>
+                    <form action='/varukorgUpdate.php' method='post'>
+                        <input type='hidden' id='kundnummer' name='kundnummer' value=".$kundnummer.">
+                        <input type='hidden' id='varuid' name='varuid' value=".$row['VaruID'].">
+                        <input type='hidden' id='antal' name='antal' value=".($row['Antal']-1).">
+                        <input type='submit' value='-1'>                    
+                    </form>
+                    </div>
+                        
+                        
+                        ". $row['Antal'] ."
+                        
+                        <div class='grid-i'>
+                     <form action='/varukorgUpdate.php' method='post' >
+                        <input type='hidden' id='kundnummer' name='kundnummer' value=".$kundnummer.">
+                        <input type='hidden' id='varuid' name='varuid' value=".$row['VaruID'].">
+                        <input type='hidden' id='antal' name='antal' value=".($row['Antal']+1).">
+                        
+                        <input type='submit' value='+1'>                    
+                    </form>
+                    </div>
+                        
+                        <div class='grid-i'>
+                    <form action='/varukorgUpdate.php' method='post'>
+                        <input type='hidden' id='kundnummer' name='kundnummer' value=".$kundnummer.">
+                        <input type='hidden' id='varuid' name='varuid' value=".$row['VaruID'].">
+                        <input type='hidden' id='antal' name='antal' value=".(0).">
+                        <input type='submit' value='ta bort'>                    
+                    </form>
+                    </div>
+                        </div>
+                        
+                        
+                        
                          ". $row['Pris'] ."</a> 
                     </div>
+                    
+                   
+                    
+                    
+                    
+                    
+                   
                </div>";
 
 

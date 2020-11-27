@@ -16,17 +16,17 @@ if ($result === TRUE) {
 }
 
 
-$inituser = "CREATE TABLE IF NOT EXISTS {$dbname}.anvandare(
-id INTEGER not null unique,
-username TEXT,
-`Fornamn` TEXT,
-Efternamn TEXT,
-Medlem_sedan DATE,
-Senaste_inlogg DATE,
-Profilbild TEXT,
-`Losenord` TEXT,
-Email TEXT,
-PRIMARY KEY (id));";
+$inituser = "CREATE TABLE IF NOT EXISTS {$dbname}.users(
+userId INTEGER not null unique AUTO_INCREMENT,
+usersFname VARCHAR(128),
+usersEname VARCHAR(128),
+usersEmail VARCHAR(128),
+usersPwd VARCHAR(128),
+usersUid VARCHAR(128),
+UserSince DATE,
+lastLogin DATE,
+profilePic TEXT,
+PRIMARY KEY (userID));";
 
 $result = $conn->query($inituser);
 if ($result === TRUE) {
@@ -57,7 +57,7 @@ kundnummer INTEGER not null,
 VaruID CHAR(8) not null,
 Antal INT(255) not null DEFAULT 0,
 FOREIGN KEY (VaruID) REFERENCES {$dbname}.Varor(VaruID),
-FOREIGN KEY (kundnummer) REFERENCES {$dbname}.anvandare(id), 
+FOREIGN KEY (kundnummer) REFERENCES {$dbname}.users(userId),
 PRIMARY KEY (kundnummer, VaruID));";
 $result = $conn->query($initVarukorg);
 if ($result === TRUE) {
@@ -73,9 +73,9 @@ if ($result === TRUE) {
 
 
 
-/*
 
-$getUser = "SELECT id FROM {$dbname}.anvandare";
+
+$getUser = "SELECT userId FROM {$dbname}.users";
 
 $resu = $conn->query($getUser);
 
@@ -89,7 +89,7 @@ $getVara = "SELECT VaruID FROM {$dbname}.Varor";
         }
         while ($row2 = $resul->fetch_row()) {
            // printf("%s %s\n", $row[0], $row2[0]);
-            $dbq = "INSERT INTO {$dbname}.varukorg(kundnummer,VaruId) VALUES ( {$row[0]} , '{$row2[0]}' )";
+            $dbq = "INSERT INTO {$dbname}.varukorg(kundnummer,VaruId,Antal) VALUES ( {$row[0]} , '{$row2[0]}', 2)";
             echo $dbq. "<br>";
             $r = $conn->query($dbq);
             if(!($r === TRUE)){
@@ -100,7 +100,7 @@ $getVara = "SELECT VaruID FROM {$dbname}.Varor";
         $resul->close();
     }
     $resu->close();
-*/
+
 
 
 

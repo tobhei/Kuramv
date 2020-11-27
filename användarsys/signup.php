@@ -41,6 +41,7 @@
                 echo "<p>Lösenorden överensstämmer inte</p>";
 
             } else if ($_GET["error"] == "stmtfailed") {
+
                 echo "<p>Hoppsan någt gick fel</p>";
 
             } else if ($_GET["error"] == "usernametaken") {
