@@ -69,8 +69,24 @@ function uidExists($conn, $username, $email) {
         exit(); 
     }
 
+    mysqli_stmt_bind_param($stmt, "ss", $username, $email);
+    mysqli_stmt_execute($stmt);
+
+    $resultData = mysqli_stmt_get_result($stmt);
+
+    if ($row = mysqli_fetch_assoc($resultData)) {
+        return $row;
+        
+    } else {
+        $result = false;
+        return $result;
+    }
+
+    mysqli_stmt_close($stmt);
+}
+
 function createUser($conn, $fnamn, $enamn, $email, $username, $pwd) {
-    $sql = "INSERT INTO users (usersFname, usersEname, usersEmail, usersUid, usersPwd) VALUES (?, ?, ?, ?, ?);";
+    $sql = "INSERT INTO users (usersFnamn, usersEnamn, usersEmail, usersUid, usersPwd) VALUES (?, ?, ?, ?, ?);";
     $stmt = mysqli_stmt_init($conn);
     if (!mysqli_stmt_prepare($stmt, $sql)) {
         header("location: ../signup.php?error=stmtfailed");
@@ -87,7 +103,7 @@ function createUser($conn, $fnamn, $enamn, $email, $username, $pwd) {
 }
 function updateUser($conn, $fnamn, $enamn, $email, $pwd) {
 
-    $sql = "UPDATE users SET fnamn=$_POST[usersFname], enamn=$_POST[usersEname], email=$_POST[usersEmail],pwd=$_POST[usersPwd] WHERE userid='$userId'";
+    $sql = "UPDATE users SET fnamn=$_POST[usersFnamn], enamn=$_POST[usersEnamn], email=$_POST[usersEmail],pwd=$_POST[usersPwd] WHERE userid='$userId'";
     $stmt = mysqli_stmt_init($conn);
     if (!mysqli_stmt_prepare($stmt, $sql)) {
         header("location: ../profilsida.php?error=stmtfailed");
