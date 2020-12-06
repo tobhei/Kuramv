@@ -67,6 +67,21 @@ if ($result === TRUE) {
 }
 
 
+$initRecensioner = "CREATE TABLE IF NOT EXISTS {$dbname}.recensioner(
+kundnummer INTEGER not null,
+VaruID CHAR(8) not null,
+recension VARCHAR(500),
+betyg INTEGER not null,
+datum DATE not null,
+FOREIGN KEY (VaruID) REFERENCES {$dbname}.Varor(VaruID),
+FOREIGN KEY (kundnummer) REFERENCES {$dbname}.users(userId),
+PRIMARY KEY (kundnummer, VaruID));";
+$result = $conn->query($initRecensioner);
+if ($result === TRUE) {
+    echo "Table Recensioner created successfully<br>";
+} else {
+    echo "Error creating table: " . $conn->error."<br>";
+}
 
 
 
@@ -75,6 +90,7 @@ if ($result === TRUE) {
 
 
 
+/*
 $getUser = "SELECT userId FROM {$dbname}.users";
 
 $resu = $conn->query($getUser);
@@ -102,7 +118,7 @@ $getVara = "SELECT VaruID FROM {$dbname}.Varor";
     $resu->close();
 
 
-
+*/
 
 
 

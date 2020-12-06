@@ -24,6 +24,7 @@
         div.scrollmenu {
             overflow: auto;
             white-space: nowrap;
+            width: min-content;
 
         }
 
@@ -49,10 +50,11 @@
         .grid-con{
             display: grid;
             grid-template-columns: auto auto auto auto;
+            grid-auto-flow: row;
             grid-gap: 10px;
             background-color: #ffffff;
             padding: 10px;
-            width: min-content;
+
             height: min-content;
         }
 
@@ -74,7 +76,10 @@
    <!-- <a href="#home">Home</a>-->
 
     <?php
-    $kundnummer = "1";
+    if(isset($_SESSION['userid'])==false){
+        exit();
+    }
+    $kundnummer = $_SESSION['userid'];
     $totpris = 0;
     $totsaker = 0;
     $conn = include 'setup.php';
@@ -147,14 +152,15 @@
                     
                     
                     
-                    
+                    </div>
                    
-               </div>";
+               ";
 
 
     }
-    echo"<a>Antal Varor:{$totsaker}</a>
-         <a>Totalt pris:{$totpris}</a>";
+    echo"<div class='grid-item'>
+        <a>Antal Varor:{$totsaker}</a>
+         <a>Totalt pris:{$totpris}</a></div>";
 
 
 

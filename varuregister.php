@@ -2,7 +2,7 @@
 <html lang="se">
 
 <?php
-    $conn = include 'setup.php';
+    $conn = include 'helpers/helpermain.php';
     ?>
 
 <head>
@@ -28,6 +28,7 @@
         .grid-container {
             display: grid;
             grid-template-columns: auto auto auto auto auto;
+            grid-auto-flow: row;
             grid-gap: 10px;
             background-color: #ffffff;
             padding: 10px;
@@ -70,7 +71,7 @@
 <div class="grid-container">
 
 		<?php
-		
+
 		$select = "SELECT VaruID, Namn, Pris, Betyg, ResourceURL from $dbname.Varor";
 		
 		if (isset($_GET["sorting"])) {
@@ -91,7 +92,7 @@
 					echo "NOT YET IMPLEMENTED (PROBABLY)";
 			}
 		}
-		
+        include "setup.php";
 		$stmt = $conn->prepare($select);
 		
 		if ( $stmt===false ) {
@@ -103,7 +104,7 @@
 		$res = $stmt->get_result();
 		while(($row = $res->fetch_assoc()) != false){
 			echo "<div class='grid-item'>";
-			echo "<a href=vara/{$row['VaruID']}> <img src='{$row['ResourceURL']}' alt='{$row['Namn']}' style='height:300px;'>";
+			echo "<a href=resource/{$row['VaruID']}/vara.php> <img src='{$row['ResourceURL']}' alt='{$row['Namn']}' style='height:300px;'>";
 			echo "<br>" .$row['Namn'] ."</a>";
 			echo "<br> Pris: " .$row['Pris'] ."kr";
 			echo "<br> Betyg: " .$row['Betyg'];

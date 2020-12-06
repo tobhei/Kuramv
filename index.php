@@ -1,10 +1,15 @@
+<?php
+header("location: /varuregister.php");
+?>
+
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
     <style>
-        .grid-con {
+        .igrid-con {
             display: grid;
             grid-template-areas:
             'head head head'
@@ -19,9 +24,14 @@
         }
         .kategori{
             grid-area: kategori;
+            min-width: 10%;
+            width: 300px;
+            border: black;
+
         }
         .varuregister{
             grid-area: varuregister;
+            max-width: 60%;
         }
         .varukorg{
             grid-area: varukorg;
@@ -39,27 +49,30 @@
 <script src="https://code.jquery.com/jquery-3.3.1.js"></script>
 <script>
     $(function (){
-        $("#varuregister").load("varuregister.php")
-        $("#varukorg").load("varukorg.php")
+       // $("#varuregister").load("varuregister.php")
+      //  $("#varukorg").load("varukorg.php")
     })
 </script>
 <body>
-    <div class="grid-con">
-        <div id="varuregister" class="varuregister">
+<?php
 
+?>
+    <div class="igrid-con">
+        <div id="varuregister" class="varuregister">
+        <?php include('varuregister.php')?>
         </div>
         <div id="head" class="head">
 
         </div>
         <div id="varukorg" class="varukorg">
-
+            <?php include('varukorg.php')?>
         </div>
         <div id="varor" class="varor">
 
         </div>
 
         <div id="kategori" class="kategori">
-
+            <a>Kategori</a>
         </div>
         <div id="foot" class="foot"></div>
 </div>
