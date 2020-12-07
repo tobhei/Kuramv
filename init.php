@@ -26,6 +26,7 @@ usersUid VARCHAR(128),
 UserSince DATE,
 lastLogin DATE,
 profilePic TEXT,
+administrator BOOLEAN, 
 PRIMARY KEY (userID));";
 
 $result = $conn->query($inituser);

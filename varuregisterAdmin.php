@@ -1,9 +1,11 @@
+<?php
+include 'helpers/header.php';
+$conn = include "setup.php";
+?>
 <!DOCTYPE html>
 <html lang="se">
 
-<?php
-    $conn = include 'setup.php';
-    ?>
+
 
 <head>
     <meta charset="UTF-8">
@@ -53,7 +55,7 @@
 
         .grid-container {
             display: grid;
-            grid-template-columns: auto auto auto auto auto;
+            grid-template-columns: auto auto auto;
             grid-gap: 10px;
             background-color: #ffffff;
             padding: 10px;

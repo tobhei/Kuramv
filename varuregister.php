@@ -1,10 +1,12 @@
+<?php
+$conn = include 'helpers/helpermain.php';
+if($_SESSION['admin'] == true){
+    echo "<script>  window.location.href = '/varuregisterAdmin.php';</script>";
+}
+$conn = include "setup.php";
+?>
 <!DOCTYPE html>
 <html lang="se">
-
-<?php
-    $conn = include 'helpers/helpermain.php';
-    ?>
-
 <head>
     <meta charset="UTF-8">
     <title>Varor</title>
@@ -26,8 +28,10 @@
         }
 
         .grid-container {
+            width: 80%;
+            max-width: 80%;
             display: grid;
-            grid-template-columns: auto auto auto auto auto;
+            grid-template-columns: auto auto auto;
             grid-auto-flow: row;
             grid-gap: 10px;
             background-color: #ffffff;
@@ -71,7 +75,6 @@
 <div class="grid-container">
 
 		<?php
-
 		$select = "SELECT VaruID, Namn, Pris, Betyg, ResourceURL from $dbname.Varor";
 		
 		if (isset($_GET["sorting"])) {
