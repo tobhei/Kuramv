@@ -1,4 +1,5 @@
 <?php
+session_start();
 $conn = include 'setup.php';
 echo "<head>
         <meta charset='UTF-8'>
@@ -37,7 +38,7 @@ echo "<head>
         </style></body>";
 echo "<div class=igrid-con>";
 echo "<div class=head>";
-include_once "header.php";
+include_once "helpers/header.php";
 echo "</div> <div class=kategori>";
 include_once "kategory.php";
 echo "</div> <div class=varukorg>";

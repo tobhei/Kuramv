@@ -77,7 +77,7 @@
 
     <?php
     if(isset($_SESSION['userid'])==false){
-        exit();
+        return;
     }
     $kundnummer = $_SESSION['userid'];
     $totpris = 0;
