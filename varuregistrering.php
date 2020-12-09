@@ -60,6 +60,7 @@
 		
 		else {
 			$target_dir = "resource/{$varuID}/";
+			if(!file_exists("resource")) mkdir("resource");
 			if(!file_exists($target_dir)) mkdir("resource/{$varuID}/");
 			$target_file = $target_dir . basename($_FILES["Varubild"]['name']);
 			$uploadOk = 1;
@@ -153,7 +154,11 @@
 		// Generera ny .php-fil för att visa varans sida
 		$varuSida = fopen("resource/{$varuID}/vara.php", "w");
 		
-		$txt = "<!DOCTYPE html>
+		$txt = "<?php
+include_once \"../../helpers/headerVara.php\";
+?>
+		
+		<!DOCTYPE html>
 <html lang=\"se\">
 
 <head>

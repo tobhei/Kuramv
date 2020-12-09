@@ -81,7 +81,9 @@ echo "
 
 <div class='title-container'>
     <div class='left-alligned'>Administrering varor</div>
-
+	<br>
+    <div class='left-alligned'><a href='varuregistrering.php'><button style='box-shadow: 10px 10px 30px brown; font-size: 20px; padding: 20px; margin: 30px; background-image: radial-gradient(circle, red, orange, yellow); color: white; text-shadow: 0 0 3px #FF0000, 0 0 5px #0000FF; transform: rotate(-10deg);'>Registrering varor</button></a></div>
+	
     <div class='right-alligned'>
 		<form action='varuregisterAdmin.php' method='get'>
             <label for='sorting'>Sortera med:</label>
@@ -325,7 +327,10 @@ else {
 			// --- Uppdatera varans .php-sida ---
 			$varuSida = fopen("resource/{$currentVaruID}/vara.php", "w");
 		
-		$txt = "<!DOCTYPE html>
+		$txt = "<?php
+include_once \"../../helpers/headerVara.php\";
+?>
+		<!DOCTYPE html>
 <html lang=\"se\">
 
 <head>
