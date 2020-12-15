@@ -29,6 +29,7 @@
 	$errorNamn = "";
 	$errorPris = "";
 	$errorBild = "";
+	$errorAntal = "";
 	
 	if (isset($_POST["Varunamn"])) {
 		$varuID = md5($_POST["Varunamn"]);
@@ -50,6 +51,16 @@
 		
 		if (($_POST["Pris"]) > PHP_INT_MAX) {
 			$errorPris = "Jag tror inte någon kommer köpa varan vid det priset.";
+		}
+	}
+	
+	if (isset($_POST["Antal"])) {
+		if (empty($_POST["Antal"])) {
+			$errorAntal = "Varan måste ha ett antal lagrade varor.";
+		}
+		
+		if (($_POST["Antal"]) > PHP_INT_MAX) {
+			$errorAntal = "Det finns inte ens så många stjärnor i galaxen.";
 		}
 	}
 	
@@ -81,7 +92,7 @@
 			
 			if ($uploadOk == 0) {
 				$errorBild = "Oops, nåt gick fel <br>" .$errorBild;
-			} else if (strlen($errorNamn) == 0 && strlen($errorPris) == 0) {
+			} else if (strlen($errorNamn) == 0 && strlen($errorPris) == 0 && strlen($errorAntal) == 0) {
 				if (move_uploaded_file($_FILES["Varubild"]['tmp_name'], $target_file)) {
 					$registrerat = "Varan " .$_POST["Varunamn"] ." har registrerats.";
 				} else {
@@ -120,6 +131,14 @@
 			?>
 			</div>
 			
+			<div class="registerform">
+			<label for="Antal">Antal i lager:</label><br>
+			<input type="number" id="Antal" name="Antal"><br>
+			<?php
+			echo $errorAntal;
+			?>
+			</div>
+			
 			<input type="submit" value="Submit" style="padding:20px; margin:20px;">
 		</fieldset>
 	</form>
@@ -129,8 +148,7 @@
 		
 		$conn = include 'setup.php';
 		
-		$sql = "INSERT INTO " .$dbname .".Varor (VaruID, Namn, Pris, ResourceURL)
-				VALUES ('{$varuID}', '{$_POST["Varunamn"]}', {$_POST["Pris"]}, '{$target_file}');"; 
+		$sql = "INSERT INTO " .$dbname .".Varor (VaruID, Namn, Pris, Antal, ResourceURL) VALUES ('{$varuID}', '{$_POST["Varunamn"]}', {$_POST["Pris"]}, {$_POST["Antal"]},'{$target_file}');"; 
 				
 		if ($conn->query($sql) === TRUE) {
 			echo "<h1>" .$registrerat ."</h1>";
@@ -141,8 +159,7 @@
 				$varuID = md5($str);
 				$varuID = substr($varuID, 0, 8);
 				
-				$sql = "INSERT INTO " .$dbname .".Varor (VaruID, Namn, Pris, ResourceURL)
-						VALUES ('{$varuID}', '{$_POST["Varunamn"]}', {$_POST["Pris"]}, '{$target_file}');"; 
+				$sql = "INSERT INTO " .$dbname .".Varor (VaruID, Namn, Pris, Antal, ResourceURL) VALUES ('{$varuID}', '{$_POST["Varunamn"]}', {$_POST["Pris"]}, {$_POST["Antal"]},'{$target_file}');"; 
 			} while ($conn->query($sql) === FALSE);
 			
 			echo "<h1>" .$registrerat ."</h1>";
@@ -199,7 +216,7 @@ include_once \"../../helpers/headerVara.php\";
 	
 	\$conn = include '../../setup.php';
 	
-	\$select = \"SELECT VaruID, Namn, Pris, Betyg, ResourceURL FROM \$dbname.Varor WHERE VaruID = '{$varuID}'\";
+	\$select = \"SELECT VaruID, Namn, Pris, Betyg, Antal, ResourceURL FROM \$dbname.Varor WHERE VaruID = '{$varuID}'\";
 	
 	\$stmt = \$conn->prepare(\$select);
 		
@@ -216,9 +233,10 @@ include_once \"../../helpers/headerVara.php\";
 		echo \"<br> <img src='\" .basename(\$row['ResourceURL']) .\"' alt='{\$row['Namn']}' style='height: 300px;'>\";
 		echo \"</div>\";
 		
-		echo \"<div class='attribute' style='float: left; width: 20%;'>\";
+		echo \"<div class='attribute' style='float: left; width: 30%;'>\";
 		echo \"Pris: \" .\$row['Pris'] .\"kr\";
 		echo \"<br> Betyg: \" .\$row['Betyg'];
+		echo \"<br> Antal: \" .\$row['Antal'];
 		if (isset(\$_SESSION['userid'])) {
 		echo \"<form action='/helpers/AddVarukorgen.php' method='post' >
 
