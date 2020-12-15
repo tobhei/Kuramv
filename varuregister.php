@@ -70,7 +70,9 @@ $conn = include "setup.php";
             <input type="submit" value="Uppdatera">
         </form>
     </div>
-
+	
+<a href='beställning.php'><button style='font-size: 20px; margin: 10px; padding: 10px;'>Mot beställningar</button></a>
+	
 </div>
 <div class="grid-container">
 
