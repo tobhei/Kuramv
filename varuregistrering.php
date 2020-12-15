@@ -220,7 +220,7 @@ include_once \"../../helpers/headerVara.php\";
 		echo \"Pris: \" .\$row['Pris'] .\"kr\";
 		echo \"<br> Betyg: \" .\$row['Betyg'];
 		if (isset(\$_SESSION['userid'])) {
-		echo \"<form action='/varukorgUpdate.php' method='post' >
+		echo \"<form action='/helpers/AddVarukorgen.php' method='post' >
 
 			<input type='hidden' id='kundnummer' name='kundnummer' value=\".\$_SESSION['userid'].\">
 			<input type='hidden' id='varuid' name='varuid' value='{$varuID}'>
