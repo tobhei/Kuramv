@@ -11,7 +11,7 @@ if($_POST["antal"] == 0){
     $stmt->bind_param("is",$_POST["kundnummer"],$_POST["varuid"]);
     $stmt->execute();
 
-    header("location: /varukorg.php");
+    header("location: /varuregister.php");
 
 }else{
 
@@ -22,7 +22,7 @@ if($_POST["antal"] == 0){
     $stmt->bind_param("iis", $_POST["antal"],$_POST["kundnummer"],$_POST["varuid"]);
     $stmt->execute();
 
-    header("location: /varukorg.php");
+    header("location: /varuregister.php");
 }
 
 exit;

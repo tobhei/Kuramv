@@ -88,7 +88,36 @@ if ($result === TRUE) {
 
 
 
+$initBeställningar = "CREATE TABLE IF NOT EXISTS {$dbname}.bestallningar(
+kundnummer INTEGER not null,
+ordernummer CHAR(8) not null,
+bestallningsDatum DATE,
+LeverasEmail VARCHAR(128),
+FOREIGN KEY (kundnummer) REFERENCES {$dbname}.users(userId),
+PRIMARY KEY (ordernummer));";
 
+$result = $conn->query($initBeställningar);
+if ($result === TRUE) {
+    echo "Table beställningar created successfully<br>";
+} else {
+    echo "Error creating table: " . $conn->error . "<br>";
+}
+
+
+$initBeställdaVaror = "CREATE TABLE IF NOT EXISTS {$dbname}.bestalldaVaror(
+ordernummer CHAR(8) not null,
+VaruID CHAR(8) not null,
+Antal INTEGER not null,
+FOREIGN KEY (VaruID) REFERENCES {$dbname}.Varor(VaruID),
+FOREIGN KEY (ordernummer) REFERENCES {$dbname}.bestallningar(ordernummer),
+PRIMARY KEY (ordernummer, VaruID));";
+
+$result = $conn->query($initBeställdaVaror);
+if ($result === TRUE) {
+    echo "Table BeställdaVaror created successfully<br>";
+} else {
+    echo "Error creating table: " . $conn->error . "<br>";
+}
 
 
 /*

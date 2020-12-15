@@ -1,21 +1,19 @@
 <?php
-
+session_start();
 $conn = include '../setup.php';
 
     if(isset($_SESSION['userid'])){
 
     $stmt = $conn->prepare("SELECT * FROM {$dbname}.varukorg WHERE kundnummer = ? AND VaruID = ?");
 
-
-    $stmt->bind_param("ss",$_SESSION['userid'],$_POST["varuid"]);
+    $stmt->bind_param("is",$_SESSION['userid'],$_POST["varuid"]);
     $stmt->execute();
     $result = $stmt->get_result();
     if ($result->num_rows == 0) {
 
-        $stmt = $conn->prepare("INSERT {$dbname}.varukorg(`kundnummer`, `VaruID`, `Antal`) VALUES ?,?,?");
-
-
-        $stmt->bind_param("iss",$_SESSION['userid'],$_POST["varuid"],1);
+        $stmt = $conn->prepare("INSERT {$dbname}.varukorg VALUES (?,?,?)");
+        $antal = 1;
+        $stmt->bind_param("isi",$_SESSION['userid'],$_POST["varuid"],$antal);
         $stmt->execute();
 
     }
@@ -23,5 +21,5 @@ $conn = include '../setup.php';
     }
 
 
-    header("location: ". $_SERVER['HTTP_REFERER']);
+    header("location: /varuregister.php");
 

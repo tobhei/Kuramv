@@ -1,32 +1,37 @@
-<?php
-
-    include_once 'helpers/header.php';
-?> 
+<?php include"helpers/header.php"?>
 <!DOCTYPE html>
 <section>
     <link rel="stylesheet" href="style.css">
     <div class="navbar">
     <?php
-    if (isset($_SESSION["useruid"])) {
+    if (isset($_SESSION["userid"])) {
     echo "<a href='index.php'> Hem </a> ";
     echo "<a href='inkludering/logout.ink.php'> logga ut </a> ";
-         echo "<a>Välkommen tillbaka " . $_SESSION["useruid"] . "</a>";
     } else {
     echo "<a href='login.php'> Logga in</a> ";
     }
-
     ?>
     </div>
         <div class="signupform">
-        <h1>Ändra uppgifter</h1>
-        <form action="inkludering/profilsida.ink.php" method="post">
-            <input class="inputbox" type="text" name="fnamn" placeholder="Ändra förnamn">
-            <input class="inputbox" type="text" name="enamn" placeholder="Ändra efternamn">
-            <input class="inputbox" type="email" name="email" placeholder="Ändra e-mailadress">
-            <input class="inputbox" type="password" name="pwd" placeholder="Byt lösenord">
-            <input class="inputbox" type="password" name="pwdrepeat" placeholder="upprepa lösenord">
-            <button class="signupknapp" type="submit" name="submit">Byt uppgifter</button>
-        </form>
+        <?php
+        include "dbpek.ink.php";
+        $records = $conn->query("SELECT * FROM users Where userId = ".$_SESSION["userid"]);
+        while($data = $records->fetch_row()) {
+          ?>
+          <div class="signupform">
+          <tr>
+              <?php echo $data[0]; ?>
+              <?php echo $data[1]; ?>
+              <?php echo $data[2]; ?>
+              <?php echo $data[3]; ?>
+              <?php echo $data[8]; ?> 
+              <img src="<?php echo $data[8];?>" alt="">  
+              <a href="inkludering/profilsida.ink.php?userId=<?php echo $data[0]; ?>">Ändra</a>
+          </tr>   
+            </div>	
+          <?php
+          }
+          ?>
         </div>
       
         
@@ -40,6 +45,5 @@
               echo "<p>E-mailen finns redan</p>";  
             }
           }
-
         ?>   
 </section>

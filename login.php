@@ -1,13 +1,17 @@
-<?php
-    include 'helpers/header.php';
-    //include_once 'header.php';
-    $_SESSION["userfnamn"] = $uidExists["usersFnamn"];
-    $_SESSION["userenamn"] = $uidExists["usersEnamn"];  
-?>
+<?php include "helpers/header.php"?>
     <section>
     <link rel="stylesheet" href="style.css">
-
     <body>
+    <div class="navbar">
+    <a href="index.php">HEM</a>
+    <?php
+    if (isset($_SESSION["useruid"])) {
+    echo "<a href='profilsida.php'> Profilsida </a> ";
+    echo "<a href='inkludering/logout.ink.php'> logga ut </a> ";
+    } else {
+    echo "<a href='signup.php'> Skapa konto </a> ";
+    }
+    ?>
 </div>
     </div>
     </body>

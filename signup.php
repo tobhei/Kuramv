@@ -1,12 +1,10 @@
-<?php
-    include_once 'helpers/header.php';
-?>
+<?php include "helpers/header.php"; ?>
 <!DOCTYPE html>
     <section>
     <link rel="stylesheet" href="style.css">
     <body>
     <div class="navbar">
-    <a href="index.php">Home</a>
+    <a href="varuregister.php">Home</a>
     <?php
     if (isset($_SESSION["useruid"])) {
     echo "<a href='profilsida.php'> Profil sida </a> ";
@@ -23,7 +21,7 @@
             <input class="inputbox" type="text" name="fnamn" placeholder="Förnamn">
             <input class="inputbox" type="text" name="enamn" placeholder="Efternamn">
             <input class="inputbox" type="email" name="email" placeholder="E-mailadress">
-            <input class="inputbox" type="text" name="uids" placeholder="Användarnamn">
+            <input class="inputbox" type="text" name="uid" placeholder="Användarnamn">
             <input class="inputbox" type="password" name="pwd" placeholder="Lösenord">
             <input class="inputbox" type="password" name="pwdrepeat" placeholder="upprepa lösenord">
             <button class="signupknapp" type="submit" name="submit">Skapa konto</button>
