@@ -130,7 +130,7 @@ $conn = include "setup.php";
 		mysqli_begin_transaction($conn, MYSQLI_TRANS_START_READ_WRITE);
 		$ordernummer = substr(md5(rand()), 0, 8);
 		
-		$sql = "SELECT vk.VaruID, vk.kundnummer, vk.antal, v.VaruID, v.Namn, v.Pris, v.ResourceURL, v.Antal FROM $dbname.varukorg vk INNER JOIN $dbname.Varor v ON vk.VaruID = v.VaruID WHERE Kundnummer = '{$_SESSION['userid']}'";
+		$sql = "SELECT vk.VaruID, vk.kundnummer, vk.antal, v.VaruID, v.Namn, v.Pris, v.ResourceURL, v.Antal FROM $dbname.varukorg vk INNER JOIN $dbname.varor v ON vk.VaruID = v.VaruID WHERE Kundnummer = '{$_SESSION['userid']}'";
 		$stmt = $conn->prepare($sql);
 		if ( $stmt===false ) {
 			die('prepare() failed: ' . htmlspecialchars($conn->error));
