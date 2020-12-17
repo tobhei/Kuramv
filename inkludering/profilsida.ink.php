@@ -10,7 +10,7 @@ if (isset($_POST['uppdatera'])) {
     $email = $_POST['email'];
         
     if (empty($_FILES["profilbild"]['name'])) {
-        $errorBild = "Varan behöver en bild.";
+        $errorBild = "Profilen behöver en bild.";
     }
     
     else {
@@ -38,7 +38,7 @@ if (isset($_POST['uppdatera'])) {
         } else {
             if (move_uploaded_file($_FILES["profilbild"]['tmp_name'], $target_file)) {
             } else {
-                echo "Oops, nåt gick fel";
+                echo "hejsanhoppsan, nåt gick fel";
             }
         }
 }

@@ -5,6 +5,7 @@
     <div class="navbar">
     <a href="index.php">HEM</a>
     <?php
+    
     if (isset($_SESSION["useruid"])) {
     echo "<a href='profilsida.php'> Profilsida </a> ";
     echo "<a href='inkludering/logout.ink.php'> logga ut </a> ";

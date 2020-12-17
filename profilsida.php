@@ -1,12 +1,15 @@
-<?php include"helpers/header.php"?>
+<?php include "helpers/header.php"?>
+
 <!DOCTYPE html>
+<?php include "inkludering/funk.ink.php"?>
 <section>
     <link rel="stylesheet" href="style.css">
     <div class="navbar">
     <?php
-    if (isset($_SESSION["userid"])) {
+    if (isset($_SESSION["useruid"])) {
     echo "<a href='index.php'> Hem </a> ";
     echo "<a href='inkludering/logout.ink.php'> logga ut </a> ";
+    echo "<a>Välkommen tillbaka " . $_SESSION["useruid"] ."</a>";
     } else {
     echo "<a href='login.php'> Logga in</a> ";
     }
@@ -14,19 +17,19 @@
     </div>
         <div class="signupform">
         <?php
-        include "dbpek.ink.php";
+        include "setup.php";
         $records = $conn->query("SELECT * FROM users Where userId = ".$_SESSION["userid"]);
         while($data = $records->fetch_row()) {
           ?>
           <div class="signupform">
           <tr>
-              <?php echo $data[0]; ?>
-              <?php echo $data[1]; ?>
-              <?php echo $data[2]; ?>
-              <?php echo $data[3]; ?>
-              <?php echo $data[8]; ?> 
-              <img src="<?php echo $data[8];?>" alt="">  
+              <a> Profilbild <br> <img src="<?php echo $data[8];?>" width="400" height="300 " alt="" alt=""> </a> 
+              <a> Förnamn: <?php echo $data[1]; ?> <br> </a>
+              <a> Efternamn: <?php echo $data[2]; ?> <br> </a>
+              <a> Email: <?php echo $data[3]; ?> <br></a>
+              <a> Medlem sedan: <?php echo $data[6]; ?> <br></a>
               <a href="inkludering/profilsida.ink.php?userId=<?php echo $data[0]; ?>">Ändra</a>
+              
           </tr>   
             </div>	
           <?php
