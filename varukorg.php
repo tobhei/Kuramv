@@ -109,7 +109,7 @@
                         <img src='{$row['ResourceURL']}'>
                     </div>
                     <div class='right-alligned'>
-                        <a href=vara/{$row['VaruID']}>".$row['Namn'] . "</a><a>
+                        <a href=resource/{$row['VaruID']}/vara.php>".$row['Namn'] . "</a><a>
                          <div class='grid-con'>
                         <div class='grid-i'>
                     <form action='/varukorgUpdate.php' method='post'>

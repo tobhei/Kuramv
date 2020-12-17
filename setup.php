@@ -1,25 +1,17 @@
 <?php
       //  $dbname = "D0018ELABB";
 
-/*         $servername = "dbserver";
+        $servername = "dbserver";
         $username = "root";
         $password = "admin";
-        $dbname = "D0018ELABB"; */
+        $dbname = "D0018ELABB";
 
        // $servername = "localhost";
       //  $username = "990907";
         //$password = "990907";
-        
-        //philips specialare
-        $servername = "localhost";
-        $username = "root";
-        $password = "";
-        $dbname = "D0018ELABB";
-        
 
 // Create connection
-        $conn = new mysqli($servername, $username, $password);
-        $conn->select_db($dbname);
+        $conn = new mysqli($servername, $username, $password,$dbname);
 
 // Check connection
         if ($conn->connect_error) {

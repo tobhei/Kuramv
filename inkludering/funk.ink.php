@@ -10,13 +10,6 @@ function emptyInputLogin($username, $pwd) {
     }
     return $result;
 }
-function isAdmin($userid, $useradmin) {
-    if (isset( $_SESSION['userid'] ) && $_SESSION['userAdmin'] {
-        return true;
-    } else {
-        return false;
-    }
-}
 function loginUser($conn, $username, $pwd) {
     $uidExists = uidExists($conn, $username, $username);
     
@@ -34,14 +27,9 @@ function loginUser($conn, $username, $pwd) {
         
     } else if ($checkPwd === true) {
         session_start();
-        if (isAdmin()) {
-            $_SESSION["userid"] = $uidExists["userId"];
-            $_SESSION["useruid"] = $uidExists["usersUid"];
-            $_SESSION["admin"] = $uidExists["userAdmin"];
-            header('location: ../adminpage.php' );
-        } else
         $_SESSION["userid"] = $uidExists["userId"];
         $_SESSION["useruid"] = $uidExists["usersUid"];
+        $_SESSION["admin"] = $uidExists["administrator"];
         header("location: ../profilsida.php");
         exit();
     }

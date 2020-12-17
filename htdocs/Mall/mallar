@@ -1,9 +1,0 @@
-
-// inloggad eller ej
-
-if (isset($_SESSION["useruid"])) {
-        echo "<a href='profilsida.php'> Profil sida </a> ";
-        echo "<a href='inkludering/logout.ink.php'> logga ut </a> ";
-        } else {
-        echo "<a href='login.php'> Logga in</a> ";
-        echo "<a href='signup.php'> Skapa konto </a> ";

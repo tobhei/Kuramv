@@ -92,7 +92,7 @@ $initBeställningar = "CREATE TABLE IF NOT EXISTS {$dbname}.bestallningar(
 kundnummer INTEGER not null,
 ordernummer CHAR(8) not null,
 bestallningsDatum DATE,
-LeverasEmail VARCHAR(128),
+LeveransEmail VARCHAR(128),
 FOREIGN KEY (kundnummer) REFERENCES {$dbname}.users(userId),
 PRIMARY KEY (ordernummer));";
 
@@ -108,6 +108,7 @@ $initBeställdaVaror = "CREATE TABLE IF NOT EXISTS {$dbname}.bestalldaVaror(
 ordernummer CHAR(8) not null,
 VaruID CHAR(8) not null,
 Antal INTEGER not null,
+Pris INTEGER not null,
 FOREIGN KEY (VaruID) REFERENCES {$dbname}.Varor(VaruID),
 FOREIGN KEY (ordernummer) REFERENCES {$dbname}.bestallningar(ordernummer),
 PRIMARY KEY (ordernummer, VaruID));";

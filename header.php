@@ -1,5 +1,7 @@
 <?php
-session_start();
+if (session_status() == PHP_SESSION_NONE) {
+	session_start();
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -16,7 +18,6 @@ session_start();
         }
         .headerTitle{
             alignment: left;
-            font-size: 80px;
         }
         .headerLogin{
             alignment: right;
@@ -31,12 +32,11 @@ session_start();
             window.location.href = '/varuregister.php';
         }
     </script>
-    <a class="headerTitle">TESTTEXT</a>
-    <img class="headerTitle" src="<?php $conn = include ($_SERVER['DOCUMENT_ROOT']."/setup.php");?>helpers/title.png" onclick="clicked()">
+    <img class="headerTitle" src="helpers/title.png" onclick="clicked()">
 
     <div class="headerLogin">
         <?php
-        $conn = include ($_SERVER['DOCUMENT_ROOT']."/setup.php");
+        $conn = include ("setup.php");
 
         //$_SESSION['userid'] = 1;
         if(isset($_SESSION['userid'])){
@@ -51,14 +51,13 @@ session_start();
             if($pic == null){
                 echo "<a href='/profilsida.php'>Profil Sida</a>";
             }else{
-                echo "<script>
-                 function click(){
-                     window.location.href = '/profilsida.php';
-                 }</script>";
-                echo "<a href='/profilsida.php'><img id='icon' onclick='click()' class='headerLogin' src= '". $pic. "'></a>";
+                echo "<img id='icon' onclick='click()' class='headerLogin' src= '". $pic. "'>";
             }
 
-
+            echo "<script>
+            function click(){
+                window.location.href = '/profilsida.php';
+            }</script>";
 
             //<img class="headerLogin" src="../res/a.png">
         }else{

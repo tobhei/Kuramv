@@ -2,7 +2,6 @@
 if (session_status() == PHP_SESSION_NONE) {
 	session_start();
 }
-define( 'USER_LEVEL_ADMIN', '1' );
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -33,11 +32,11 @@ define( 'USER_LEVEL_ADMIN', '1' );
             window.location.href = '/varuregister.php';
         }
     </script>
-    <img class="headerTitle" src="helpers/title.png" onclick="clicked()">
+    <img class="headerTitle" src="../../helpers/title.png" onclick="clicked()">
 
     <div class="headerLogin">
         <?php
-        $conn = include ("setup.php");
+        $conn = include ("../../setup.php");
 
         //$_SESSION['userid'] = 1;
         if(isset($_SESSION['userid'])){
@@ -50,9 +49,9 @@ define( 'USER_LEVEL_ADMIN', '1' );
             $result = $stmta->get_result();
             $pic = $result->fetch_row()[0];
             if($pic == null){
-                echo "<a href='/profilsida.php'>Profil Sida</a>";
+                echo "<a href='../../profilsida.php'>Profil Sida</a>";
             }else{
-                echo "<img id='icon' onclick='click()' class='headerLogin' src= '". $pic. "'>";
+                echo "<img id='icon' onclick='click()' class='headerLogin' src= '../../". $pic. "'>";
             }
 
             echo "<script>

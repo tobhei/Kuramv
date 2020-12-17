@@ -167,11 +167,14 @@ else {
 	$errorBild = "";
 	$uppdateratBild = false;
 	
+	$errorAntal = "";
+	$uppdateratAntal = false;
+	
 	echo "<a href='varuregisterAdmin.php'>
 	<button style='font-size: 20px; padding: 20px'>Tillbaka</button>
 	</a>";
 	
-	$select = "SELECT VaruID, Namn, Pris, Betyg, ResourceURL FROM $dbname.Varor WHERE VaruID = '{$_GET['vara']}'";
+	$select = "SELECT VaruID, Namn, Pris, Betyg, Antal, ResourceURL FROM $dbname.Varor WHERE VaruID = '{$_GET['vara']}'";
 	
 	$stmt = $conn->prepare($select);
 		
@@ -208,6 +211,12 @@ else {
 					</div>
 					
 					<div class='registerform'>
+						<label for='Antal'>Antal i lager:</label><br>
+						<input type='number' id='Antal' name='Antal'><br>
+						"; echo $errorAntal ."
+					</div>
+					
+					<div class='registerform'>
 						<label for='Varubild'>Bild på varan:</label><br>
 						<input type='file' id='Varubild' name='Varubild'><br>
 						"; echo $errorBild ."
@@ -223,6 +232,7 @@ else {
 				<img src='{$row['ResourceURL']}' alt='{$row['Namn']}' style='height:300px;'> <br>
 				Nuvarande varunamn: <b>{$row['Namn']}</b> <br>
 				Nuvarande pris: <b>{$row['Pris']} kr </b> <br>
+				Nuvarande antal i lager: <b>{$row['Antal']} </b> <br>
 				
 				</div>
 			</div>
@@ -246,6 +256,16 @@ else {
 		
 		if (($_POST["Pris"]) > PHP_INT_MAX) {
 			$errorPris = "Jag tror inte någon kommer köpa varan vid det priset.";
+		}
+	}
+	
+	if (isset($_POST["Antal"])) {
+		if (!empty($_POST["Antal"])) {
+			$uppdateratAntal = true;
+		}
+		
+		if (($_POST["Antal"]) > PHP_INT_MAX) {
+			$errorAntal = "Det finns inte ens så många stjärnor i galaxen.";
 		}
 	}
 	
@@ -274,7 +294,7 @@ else {
 			
 			if ($uploadOk == 0) {
 				$errorBild = "Oops, nåt gick fel <br>" .$errorBild;
-			} else if (strlen($errorNamn) == 0 && strlen($errorPris) == 0) {
+			} else if (strlen($errorNamn) == 0 && strlen($errorPris) == 0 && strlen($errorAntal) == 0) {
 				if (!move_uploaded_file($_FILES["Varubild"]['tmp_name'], $target_file)) {
 					echo "Oops, nåt gick fel";
 				}
@@ -283,8 +303,8 @@ else {
 	}
 	
 	if (isset($_POST['Ändra'])) {
-		if (($uppdateratNamn || $uppdateratPris || $uppdateratBild) && 
-		(strlen($errorNamn) == 0 && strlen($errorPris) == 0 && strlen($errorBild) == 0)) {
+		if (($uppdateratNamn || $uppdateratPris || $uppdateratBild || $uppdateratAntal) && 
+		(strlen($errorNamn) == 0 && strlen($errorPris) == 0 && strlen($errorBild) == 0 && strlen($errorAntal) == 0)) {
 			
 			$sql = "UPDATE {$dbname}.Varor SET ";
 			
@@ -293,7 +313,7 @@ else {
 				$sql = $sql ."Namn = '{$_POST['Varunamn']}'";
 				
 				$uppdaterad = $uppdaterad ."namn";
-				if ($uppdateratPris || $uppdateratBild) {
+				if ($uppdateratPris || $uppdateratBild || $uppdateratAntal) {
 					$sql = $sql .", ";
 					$uppdaterad = $uppdaterad ." + ";
 				}
@@ -303,6 +323,16 @@ else {
 				$sql = $sql ."Pris = '{$_POST['Pris']}'";
 				
 				$uppdaterad = $uppdaterad ."pris";
+				if ($uppdateratBild || $uppdateratAntal) {
+					$sql = $sql .", ";
+					$uppdaterad = $uppdaterad ." + ";
+				}
+			}
+			
+			if ($uppdateratAntal) {
+				$sql = $sql ."Antal = '{$_POST['Antal']}'";
+				
+				$uppdaterad = $uppdaterad ."antal";
 				if ($uppdateratBild) {
 					$sql = $sql .", ";
 					$uppdaterad = $uppdaterad ." + ";
@@ -371,7 +401,7 @@ include_once \"../../helpers/headerVara.php\";
 	
 	\$conn = include '../../setup.php';
 	
-	\$select = \"SELECT VaruID, Namn, Pris, Betyg, ResourceURL FROM \$dbname.Varor WHERE VaruID = '{$currentVaruID}'\";
+	\$select = \"SELECT VaruID, Namn, Pris, Betyg, Antal, ResourceURL FROM \$dbname.Varor WHERE VaruID = '{$currentVaruID}'\";
 	
 	\$stmt = \$conn->prepare(\$select);
 		
@@ -388,11 +418,12 @@ include_once \"../../helpers/headerVara.php\";
 		echo \"<br> <img src='\" .basename(\$row['ResourceURL']) .\"' alt='{\$row['Namn']}' style='height: 300px;'>\";
 		echo \"</div>\";
 		
-		echo \"<div class='attribute' style='float: left; width: 20%;'>\";
+		echo \"<div class='attribute' style='float: left; width: 30%;'>\";
 		echo \"Pris: \" .\$row['Pris'] .\"kr\";
 		echo \"<br> Betyg: \" .\$row['Betyg'];
+		echo \"<br> Antal i lager: \" .\$row['Antal'];
 		if (isset(\$_SESSION['userid'])) {
-		echo \"<form action='/varukorgUpdate.php' method='post' >
+		echo \"<form action='/helpers/AddVarukorgen.php' method='post' >
 
 			<input type='hidden' id='kundnummer' name='kundnummer' value=\".\$_SESSION['userid'].\">
 			<input type='hidden' id='varuid' name='varuid' value='{$currentVaruID}'>
