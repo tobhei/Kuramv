@@ -74,7 +74,7 @@ VaruID CHAR(8) not null,
 recension VARCHAR(500),
 betyg INTEGER not null,
 datum DATE not null,
-FOREIGN KEY (VaruID) REFERENCES {$dbname}.Varor(VaruID),
+FOREIGN KEY (VaruID) REFERENCES {$dbname}.Varor(VaruID) ON DELETE CASCADE,
 FOREIGN KEY (kundnummer) REFERENCES {$dbname}.users(userId),
 PRIMARY KEY (kundnummer, VaruID));";
 $result = $conn->query($initRecensioner);
