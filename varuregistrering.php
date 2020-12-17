@@ -52,8 +52,8 @@ include "header.php";
 			$errorPris = "Varan måste ha ett pris.";
 		}
 		
-		if (($_POST["Pris"]) > PHP_INT_MAX) {
-			$errorPris = "Jag tror inte någon kommer köpa varan vid det priset.";
+		if (($_POST["Pris"]) > PHP_INT_MAX || ($_POST["Pris"]) < 0) {
+			$errorPris = "Felaktigt pris.";
 		}
 	}
 	
@@ -62,8 +62,8 @@ include "header.php";
 			$errorAntal = "Varan måste ha ett antal lagrade varor.";
 		}
 		
-		if (($_POST["Antal"]) > PHP_INT_MAX) {
-			$errorAntal = "Det finns inte ens så många stjärnor i galaxen.";
+		if (($_POST["Antal"]) > PHP_INT_MAX || ($_POST["Antal"]) < 0) {
+			$errorAntal = "Felaktigt antal.";
 		}
 	}
 	
