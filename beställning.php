@@ -129,11 +129,17 @@ $conn = include "setup.php";
 	if(isset($_POST['bekräfta'])) {
 		mysqli_begin_transaction($conn, MYSQLI_TRANS_START_READ_WRITE);
 		$ordernummer = substr(md5(rand()), 0, 8);
-		
-		$sql = "SELECT vk.VaruID, vk.kundnummer, vk.antal, v.VaruID, v.Namn, v.Pris, v.ResourceURL, v.Antal FROM $dbname.varukorg vk INNER JOIN $dbname.varor v ON vk.VaruID = v.VaruID WHERE Kundnummer = '{$_SESSION['userid']}'";
+
+        $res = $stmt->get_result();
+        while(($row = $res->fetch_assoc()) != false){
+            $userEmail = $row['usersEmail'];
+        }
+        mysqli_query($conn, "INSERT INTO $dbname.bestallningar VALUES ('{$_SESSION['userid']}', '$ordernummer', '" .date('Y-m-d') ."', '$userEmail')");
+
+        $sql = "SELECT vk.VaruID, vk.kundnummer, vk.antal, v.VaruID, v.Namn, v.Pris, v.ResourceURL, v.Antal FROM $dbname.varukorg vk INNER JOIN $dbname.Varor v ON vk.VaruID = v.VaruID WHERE Kundnummer = '{$_SESSION['userid']}'";
 		$stmt = $conn->prepare($sql);
 		if ( $stmt===false ) {
-			die('prepare() failed: ' . htmlspecialchars($conn->error));
+			die('prepare() failed: Ifall bekräftad: ' . htmlspecialchars($conn->error));
 		}
 		
 		$stmt->execute();
@@ -145,8 +151,13 @@ $conn = include "setup.php";
 				$conn->close();
 				return;
 			} else {
-				mysqli_query($conn, "INSERT INTO $dbname.bestalldaVaror VALUES ('$ordernummer', '{$row['VaruID']}', '{$row['antal']}')");
-				mysqli_query($conn, "UPDATE $dbname.Varor SET Antal = '" .($row['Antal'] - $row['antal']) ."' WHERE VaruID = '{$row['VaruID']}'");
+				mysqli_query($conn, "INSERT INTO $dbname.bestalldaVaror VALUES ('$ordernummer', '{$row['VaruID']}', '{$row['antal']}')") or die(mysqli_error($conn));
+				echo "INSERT INTO $dbname.bestalldaVaror VALUES ('$ordernummer', '{$row['VaruID']}', '{$row['antal']}')";
+				echo "<a><br></a>";
+
+				mysqli_query($conn, "UPDATE $dbname.Varor SET Antal = '" .($row['Antal'] - $row['antal']) ."' WHERE VaruID = '{$row['VaruID']}'")or die(mysqli_error($conn));
+				echo  "UPDATE $dbname.Varor SET Antal = '" .($row['Antal'] - $row['antal']) ."' WHERE VaruID = '{$row['VaruID']}'";
+                echo "<a><br></a>";
 			}
 		}
 		

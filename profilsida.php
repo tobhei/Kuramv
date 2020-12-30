@@ -29,6 +29,7 @@
               <a> Email: <?php echo $data[3]; ?> <br></a>
               <a> Medlem sedan: <?php echo $data[6]; ?> <br></a>
               <a href="inkludering/profilsida.ink.php?userId=<?php echo $data[0]; ?>">Ändra</a>
+              <a href="ordersida.php">Se Ordrar</a>
               
           </tr>   
             </div>	
