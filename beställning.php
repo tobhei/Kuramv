@@ -130,6 +130,15 @@ $conn = include "setup.php";
 		mysqli_begin_transaction($conn, MYSQLI_TRANS_START_READ_WRITE);
 		$ordernummer = substr(md5(rand()), 0, 8);
 
+        $sql = "SELECT usersEmail FROM $dbname.users WHERE userid = '{$_SESSION['userid']}'";
+        $stmt = $conn->prepare($sql);
+        if ( $stmt===false ) {
+            echo "failed1";
+            die('prepare() failed: ' . htmlspecialchars($conn->error));
+        }
+
+        $stmt->execute();
+
         $res = $stmt->get_result();
         while(($row = $res->fetch_assoc()) != false){
             $userEmail = $row['usersEmail'];
@@ -151,13 +160,11 @@ $conn = include "setup.php";
 				$conn->close();
 				return;
 			} else {
-				mysqli_query($conn, "INSERT INTO $dbname.bestalldaVaror VALUES ('$ordernummer', '{$row['VaruID']}', '{$row['antal']}')") or die(mysqli_error($conn));
-				echo "INSERT INTO $dbname.bestalldaVaror VALUES ('$ordernummer', '{$row['VaruID']}', '{$row['antal']}')";
-				echo "<a><br></a>";
+			    $totpris = $row['Pris']*$row['antal'];
+				mysqli_query($conn, "INSERT INTO $dbname.bestalldaVaror VALUES ('$ordernummer', '{$row['VaruID']}', '{$row['antal']}', '{$totpris}')") or die(mysqli_error($conn));
 
 				mysqli_query($conn, "UPDATE $dbname.Varor SET Antal = '" .($row['Antal'] - $row['antal']) ."' WHERE VaruID = '{$row['VaruID']}'")or die(mysqli_error($conn));
-				echo  "UPDATE $dbname.Varor SET Antal = '" .($row['Antal'] - $row['antal']) ."' WHERE VaruID = '{$row['VaruID']}'";
-                echo "<a><br></a>";
+
 			}
 		}
 		
