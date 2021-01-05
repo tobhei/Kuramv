@@ -77,7 +77,7 @@ $conn = include "setup.php";
 <div class="grid-container">
 
 		<?php
-		$select = "SELECT VaruID, Namn, Pris, Betyg, ResourceURL from $dbname.Varor";
+		$select = "SELECT VaruID, Namn, Pris, Betyg, ResourceURL from $dbname.Varor where Antal != '0'";
 		
 		if (isset($_GET["sorting"])) {
 			switch ($_GET["sorting"]) {

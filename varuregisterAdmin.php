@@ -108,7 +108,7 @@ echo "
 
 ";
 		
-		$select = "SELECT VaruID, Namn, Pris, Betyg, ResourceURL from $dbname.Varor";
+		$select = "SELECT VaruID, Namn, Pris, Betyg, ResourceURL from $dbname.Varor where Antal != 0";
 		
 		if (isset($_GET["sorting"])) {
 			switch ($_GET["sorting"]) {
@@ -571,7 +571,8 @@ include_once \"../../helpers/headerVara.php\";
 	}
 	
 	if (isset($_POST['Ta_bort'])) {
-		$sql = "DELETE FROM {$dbname}.Varor WHERE VaruID = '{$currentVaruID}'";
+		//$sql = "DELETE FROM {$dbname}.Varor WHERE VaruID = '{$currentVaruID}'";
+        $sql = "UPDATE {$dbname}.Varor SET Antal = '0' WHERE VaruID = '{$currentVaruID}'";
 		if ($conn->query($sql) === TRUE) {
 			echo "<h1> Varan har borttagits från databasen </h1>";
 		} else {
